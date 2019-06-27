@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Foresee</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <div class="col-sm-3"> <img class="img-responsive" src="{{url_for('static', filename='logo.png')}}" alt="Foresee" width="400px" height="150px"></div>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+              <button type="button" class="btn btn-primary mr-3" onclick="getInitData('emea')">Exchange emea</button>
+              <button type="button" class="btn btn-primary mr-3" onclick="getInitData('apac')">Exchange apac</button>
+              <button type="button" class="btn btn-primary mr-3" onclick="getInitData('xcme')">Exchange xcme</button>
+              <button type="button" class="btn btn-primary mr-3" onclick="getInitData('xnse')">Exchange xnse</button>
+              <button type="button" class="btn btn-primary mr-3" onclick="getInitData('xsoe')">Exchange xsoe</button>
+              <button type="button" class="btn btn-primary mr-3" onclick="getInitData('iflo')">Exchange iflo</button>
+          </div>
+<br>
+          <!-- Content Row -->
+
+          <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Stock Price</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <!-- <canvas id="myAreaChart"></canvas> -->
+                      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <form action = "/renderinfo" method = "post">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Stock
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">TCS</a>
+                      <a class="dropdown-item" href="#">MCB</a>
+                      <a class="dropdown-item" href="#">APPL</a>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" for="date">From</label>
+                    <input class="form-control" id="fromDate" name="date" placeholder="MM/DD/YYY" type="text"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" for="date">To</label>
+                    <input class="form-control" id="toDate" name="date" placeholder="MM/DD/YYY" type="text"/>
+                  </div>
+                  <label class="control-label">Method</label>
+                <div class="radio">
+                    <label><input type="radio" name="optradio" checked>Arima</label>
+                  </div>
+                  <div class="radio disabled">
+                    <label><input type="radio" name="optradio">LSTM</label>
+                  </div>
+
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Strategy
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Max Profit</a>
+                    </div>
+                  </div>
+                  <br>
+                  <button type="submit" class="btn btn-primary">Simulate</button>
+              </form>
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">News Feed</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+
+                    </div>
+                  </div>
+                </div>
+                  <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <!--<canvas id="myPieChart"></canvas>-->
+                  </div>
+
+                    <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Find News Sentiment..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" onclick="">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+
+                  <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-primary"></i> Direct
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-success"></i> Social
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-info"></i> Referral
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+           <div class="row">
+
+           </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Content Column -->
+            <div class="col-lg-6 mb-4">
+
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+  <script>
+
+function getInitData(exchange){
+var dataPoints = [];
+
+var options =  {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: exchange+" Price"
+	},
+	axisX: {
+		valueFormatString: "DD MMM YYYY",
+	},
+	axisY: {
+		title: "USD",
+		titleFontSize: 24,
+		includeZero: false
+	},
+	data: [{
+		type: "spline",
+		yValueFormatString: "$#,###.##",
+		dataPoints: dataPoints
+	}]
+};
+
+function addData(data) {
+	for (var i = 0; i < data.length; i++) {
+		dataPoints.push({
+			x: new Date(data[i].date),
+			y: data[i].units
+		});
+	}
+	$("#chartContainer").CanvasJSChart(options);
+
+}
+
+$.getJSON('priceinfo/'+exchange, addData);
+  }
+
+  </script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/jquery/jquery.min.js"></script>
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
+  <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
+
+
+    <!--<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>-->
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+  <script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+
+</body>
+
+</html>
